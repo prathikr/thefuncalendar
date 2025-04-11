@@ -129,7 +129,7 @@ def subscribe(user_email, calendar_id):
                         (" ".join(calendars), user_email,))
             conn.commit()
     except Exception as e:
-        print("Error subscribing to calendar ")
+        print("Error subscribing to calendar")
         print(e)
     finally:
         conn.close()
