@@ -3,7 +3,6 @@
 #### prod: https://thefuncalendar-2adc7ef01a7c.herokuapp.com/
 #### dev: https://mangoml-fd6b764656ee.herokuapp.com/
 
-<br>
 TODO:
 - add live score update feature
 - figure out how to make this appeal to women (potentially add tv show release schedules?)
