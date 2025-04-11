@@ -308,5 +308,5 @@ TEAM_COLOR_MAPPING = {
     "PAOK": "8",                      # Black/White - Graphite (Greece)
 
     "UFC": "11",
-    "UFC Fight Night": "11",
+    "UFC Fight Nights": "11",
 }
