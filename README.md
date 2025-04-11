@@ -1,5 +1,7 @@
-### prod: https://thefuncalendar-2adc7ef01a7c.herokuapp.com/
-### dev: https://mangoml-fd6b764656ee.herokuapp.com/
+# thefuncalendar
+
+#### prod: https://thefuncalendar-2adc7ef01a7c.herokuapp.com/
+#### dev: https://mangoml-fd6b764656ee.herokuapp.com/
 
 TODO:
 - add live score update feature
