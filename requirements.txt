@@ -1,2 +1,11 @@
+requests==2.32.3
 Flask==3.0.3
+oauthlib==3.2.2
+pyOpenSSL==25.0.0
+Flask-Login==0.6.3
+python-dotenv==1.0.1
 gunicorn==23.0.0
+datetime==5.5
+python-dateutil==2.9.0.post0
+google-api-python-client==2.166.0
+google-auth-oauthlib==1.2.1
