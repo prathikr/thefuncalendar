@@ -17,6 +17,8 @@ TODO:
 - settings page for premium users to enable/disable any premium feature
 - add an advertisement to free page
 - ensure that updates to database don't overwrite existing users or their subscriptions
+- add betting information
+- add ticket information
 
 
 Completed:

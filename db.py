@@ -50,10 +50,11 @@ def create_db_table():
             CREATE TABLE events (
                 event_id INTEGER PRIMARY KEY NOT NULL,
                 title TEXT NOT NULL,
-                location TEXT NOT NULL,
+                location TEXT,
                 date TEXT NOT NULL,
                 time TEXT NOT NULL,
-                calendar_id INTEGER NOT NULL
+                calendar_id INTEGER NOT NULL,
+                description TEXT
             );
             
         ''')
@@ -169,8 +170,8 @@ def insert_calendar(calendar, check_duplicates=False):
 
         event_ids = []
         for event in calendar['events']:
-            cur.execute("INSERT INTO events (title, location, date, time, calendar_id) VALUES (?, ?, ?, ?, ?)", 
-                        (event['title'], event['location'], event['date'], event['time'], calendar_id,))
+            cur.execute("INSERT INTO events (title, location, date, time, calendar_id, description) VALUES (?, ?, ?, ?, ?, ?)", 
+                        (event['title'], event['location'], event['date'], event['time'], calendar_id, event.get("description", ""),))
             conn.commit()
             event_ids.append(str(cur.lastrowid))
 
@@ -305,6 +306,26 @@ def IST_to_PST(match_date, match_time):
     time_formatted = f"{start_time}-{end_time}"
     
     return time_formatted, date_formatted
+
+
+def UFC_timezone(ufc_datetime):
+    ufc_datetime = parser.parse(ufc_datetime)
+    
+    # Format date as "MM/DD/YYYY"
+    date_formatted = ufc_datetime.strftime("%m/%d/%Y")
+    
+    # Get start time in PST, adding 1 hour
+    ufc_datetime = ufc_datetime + datetime.timedelta(hours=1)
+    start_time = ufc_datetime.strftime("%H:%M")
+    
+    # For end time, let's assume games last 2.5 hours
+    end_datetime = ufc_datetime + datetime.timedelta(hours=2.5)
+    end_time = end_datetime.strftime("%H:%M")
+    
+    # Format time as "HH:MMPST-HH:MMPST"
+    time_formatted = f"{start_time}-{end_time}"
+
+    return date_formatted, time_formatted
 
 def get_schedule(schedule_url, stadiums_url, team_info_url, api_key):
     stadiums_response = requests.get(stadiums_url, params={"key": api_key})
@@ -580,6 +601,82 @@ def add_schedule_to_db(schedule, organization, season, check_duplicates=False):
             print(f"Error writing to soccer_teams.txt: {e}")
         _ = insert_calendar(calendar, check_duplicates)
 
+def get_ufc_schedule():
+    schedule_url = "https://api.sportsdata.io/v3/mma/scores/json/Schedule/UFC/2025"
+
+    MMA_API_KEY = os.environ.get("MMA_API_KEY", None)
+    assert MMA_API_KEY is not None, "Missing MMA API key"
+
+    schedule_response = requests.get(schedule_url, params={"key": MMA_API_KEY})
+    if schedule_response.status_code == 200:
+        data = schedule_response.json()
+        print(f"\nTotal fights retrieved: {len(data)}")
+    else:
+        print(f"Error: Received status code {schedule_response.status_code}")
+        print(schedule_response.text)
+        return {}
+
+    fight_night_schedule = []
+    ufc_schedule = []
+    for fight in data:
+        if not fight["DateTime"]:
+            print(f"Skipping game with missing time: {fight}")
+            continue
+
+        date_formatted, time_formatted = UFC_timezone(fight["DateTime"])
+
+        event_details_url = f"https://api.sportsdata.io/v3/mma/scores/json/Event/{fight['EventId']}"
+        event_detail_response = requests.get(event_details_url, params={"key": MMA_API_KEY})
+        if event_detail_response.status_code == 200:
+            data = event_detail_response.json()
+            print(f"\nTotal fighters retrieved: {len(data)}")
+        else:
+            print(f"Error: Received status code {event_detail_response.status_code}")
+            print(event_detail_response.text)
+            return {}
+        
+        description = "Scheduled Fights:\n\n"
+        for fights in data["Fights"]:
+            if fights["Fighters"]:
+                fighter1_firstname = fights["Fighters"][0]["FirstName"] if fights["Fighters"][0]["FirstName"] else ""
+                fighter1_lastname = fights["Fighters"][0]["LastName"] if fights["Fighters"][0]["LastName"] else ""
+                fighter2_firstname = fights["Fighters"][1]["FirstName"] if fights["Fighters"][1]["FirstName"] else ""
+                fighter2_lastname = fights["Fighters"][1]["LastName"] if fights["Fighters"][1]["LastName"] else ""
+
+                description += f"{fighter1_firstname} {fighter1_lastname} vs {fighter2_firstname} {fighter2_lastname}\n"
+
+        event = {
+            "title": fight["Name"],
+            "location": "",
+            "date": date_formatted,
+            "time": time_formatted,
+            "description": description
+        }
+
+        if "Fight Night" in fight["Name"]:
+            fight_night_schedule.append(event)
+        else:
+            ufc_schedule.append(event)
+
+    return fight_night_schedule, ufc_schedule
+
+def add_ufc_schedule_to_db(fight_night_schedule, ufc_schedule):
+    calendar = {
+        "name": "UFC Fight Nights",
+        "events": fight_night_schedule,
+        "organization": "UFC",
+        "season": "2025"
+    }
+    _ = insert_calendar(calendar)
+
+    calendar = {
+        "name": "UFC",
+        "events": ufc_schedule,
+        "organization": "UFC",
+        "season": "2025"
+    }
+    _ = insert_calendar(calendar)
+
 if __name__ == "__main__":
     create_db_table()
 
@@ -623,3 +720,6 @@ if __name__ == "__main__":
     for league_key, league_name in top_soccer_leagues.items():
         soccer_schedule = get_soccer_league_schedule(league_key)
         add_schedule_to_db(soccer_schedule, league_name + " (fútbol)", "2025", check_duplicates=True)
+
+    fight_night_schedule, ufc_schedule = get_ufc_schedule()
+    add_ufc_schedule_to_db(fight_night_schedule, ufc_schedule)

@@ -252,6 +252,7 @@ def google_sync():
                     'timeZone': 'America/Los_Angeles',
                 },
                 'colorId': colorId,
+                'description': raw_event.get('description', ''),
             }
 
             batch.add(

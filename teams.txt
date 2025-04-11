@@ -1,0 +1,313 @@
+Cubs
+Dodgers
+Yankees
+Brewers
+Blue Jays
+Orioles
+Rangers
+Red Sox
+Nationals
+Phillies
+White Sox
+Angels
+Reds
+Giants
+Astros
+Mets
+Royals
+Guardians
+Marlins
+Pirates
+Padres
+Braves
+Cardinals
+Twins
+Tigers
+Diamondbacks
+Mariners
+Athletics
+Rays
+Rockies
+Celtics
+Knicks
+Lakers
+Timberwolves
+Pistons
+Pacers
+Hawks
+Nets
+Heat
+Magic
+76ers
+Bucks
+Raptors
+Cavaliers
+Rockets
+Hornets
+Pelicans
+Bulls
+Jazz
+Grizzlies
+Clippers
+Suns
+Trail Blazers
+Warriors
+Wizards
+Mavericks
+Spurs
+Nuggets
+Thunder
+Kings
+Chiefs
+Ravens
+Eagles
+Packers
+Falcons
+Steelers
+Bills
+Bears
+Titans
+Bengals
+Patriots
+Colts
+Texans
+Dolphins
+Jaguars
+Saints
+Panthers
+Vikings
+Chargers
+Raiders
+Seahawks
+Broncos
+Browns
+Cowboys
+Buccaneers
+Commanders
+Lions
+Rams
+49ers
+Jets
+Sabres
+Devils
+Kraken
+Blues
+Bruins
+Hockey Club
+Blackhawks
+Canadiens
+Maple Leafs
+Penguins
+Oilers
+Canucks
+Flames
+Golden Knights
+Avalanche
+Red Wings
+Senators
+Islanders
+Predators
+Stars
+Wild
+Blue Jackets
+Sharks
+Hurricanes
+Lightning
+Flyers
+Capitals
+Ducks
+Chennai Super Kings
+Kolkata Knight Riders
+Royal Challengers Bengaluru
+Delhi Capitals 
+Gujarat Titans
+Rajasthan Royals
+Punjab Kings
+Lucknow Super Giants
+Mumbai Indians
+Sunrisers Hyderabad
+Los Angeles FC
+San Diego FC
+Minnesota United FC
+Atlanta United FC
+CF Montréal
+Columbus Crew
+Chicago Fire FC
+D.C. United SC
+Toronto FC
+FC Cincinnati
+New York Red Bulls
+Inter Miami CF
+New York City FC
+Orlando City SC
+Philadelphia Union
+Austin FC
+Sporting Kansas City
+Houston Dynamo
+FC Dallas
+Nashville SC
+New England Revolution
+St. Louis City SC
+Colorado Rapids SC
+San Jose Earthquakes
+Real Salt Lake
+Seattle Sounders FC
+Charlotte FC
+Portland Timbers
+Vancouver Whitecaps FC
+Los Angeles Galaxy
+FK Panevėžys
+Helsingin JK
+Ħamrun Spartans FC
+Lincoln Red Imps FC
+The New Saints FC
+FK Dečić Tuzi
+UE Santa Coloma
+FC Ballkani
+KF Víkingur
+Shamrock Rovers FC
+AC Virtus
+FCSB
+Ordabasy FK
+FC Petrocub Hînceşti
+FC Flora
+NK Celje
+FK Rīgas Futbola Skola
+Larne FC
+ŠK Slovan Bratislava
+FC Struga Trim & Lum
+KÍ
+FC Déifferdeng 03
+PFK Ludogorets 1945 Razgrad
+SK Dinamo Batumi
+FK Dynama-Minsk
+Pyunik FA
+FK Borac Banja Luka
+KF Egnatia Rrogozhinë
+FK Bodø/Glimt
+Jagiellonia Białystok
+Qarabağ Ağdam FK
+APÓEL
+Malmö FF
+MH Maccabi Tel Aviv
+Ferencvárosi TC
+FK Dynamo Kyiv
+FK Partizan Beograd
+FC Midtjylland
+FC Lugano
+Fenerbahçe SK
+AC Sparta Praha
+PAOK
+Rangers FC
+Lille OSC
+FC Red Bull Salzburg
+FC Twente '65
+SK Slavia Praha
+RU Saint-Gilloise
+FK Crvena Zvezda
+GNK Dinamo Zagreb
+BSC Young Boys
+Galatasaray SK
+Aston Villa FC
+Juventus FC
+PSV
+AC Milan
+Liverpool FC
+FC Bayern München
+Real Madrid CF
+VfB Stuttgart
+Sporting CP
+Bologna FC 1909
+FK Shakhtar Donetsk
+Celtic FC
+Club Brugge KV
+BV Borussia 09 Dortmund
+Manchester City FC
+FC Internazionale Milano
+Paris Saint-Germain FC
+Girona FC
+Feyenoord Rotterdam
+Bayer 04 Leverkusen
+Sport Lisboa e Benfica
+AS Monaco FC
+FC Barcelona
+Atalanta BC
+Arsenal FC
+Club Atlético de Madrid
+RB Leipzig
+Stade Brestois 29
+SK Puntigamer Sturm Graz
+Manchester United FC
+Fulham FC
+Ipswich Town FC
+Wolverhampton Wanderers FC
+Everton FC
+Brighton & Hove Albion FC
+Newcastle United FC
+Southampton FC
+Nottingham Forest FC
+AFC Bournemouth
+West Ham United FC
+Brentford FC
+Crystal Palace FC
+Chelsea FC
+Leicester City FC
+Tottenham Hotspur FC
+Athletic Club
+Deportivo Alavés
+CD Leganés
+RCD Espanyol de Barcelona
+Real Sociedad de Fútbol
+Villarreal CF
+RC Celta de Vigo
+Sevilla FC
+RCD Mallorca
+Real Valladolid CF
+Real Betis Balompié
+CA Osasuna
+UD Las Palmas
+Rayo Vallecano de Madrid
+Valencia CF
+Getafe CF
+Borussia Mönchengladbach
+1. FSV Mainz 05
+1. FC Union Berlin
+FC Augsburg
+SV Werder Bremen
+VfL Bochum 1848
+SC Freiburg
+TSG 1899 Hoffenheim
+Holstein Kiel
+Eintracht Frankfurt
+VfL Wolfsburg
+FC St. Pauli 1910
+1. FC Heidenheim 1846
+Genoa CFC
+Parma Calcio 1913
+ACF Fiorentina
+Torino FC
+Empoli FC
+AC Monza
+Udinese Calcio
+Hellas Verona FC
+SSC Napoli
+Cagliari Calcio
+AS Roma
+SS Lazio
+Venezia FC
+US Lecce
+Como 1907
+AJ Auxerre
+Le Havre AC
+AS Saint-Étienne
+FC Nantes
+Angers SCO
+Olympique de Marseille
+OGC Nice
+Stade de Reims
+Olympique Lyonnais
+Racing Club de Lens
+RC Strasbourg Alsace
+Montpellier HSC
+Toulouse FC
+Stade Rennais FC 1901

@@ -305,5 +305,8 @@ TEAM_COLOR_MAPPING = {
     "APÓEL": "5",                    # Yellow/Blue - Banana (Cyprus)
     "Qarabağ Ağdam FK": "8",         # Black - Graphite (Azerbaijan)
     "Ferencvárosi TC": "2",          # Green/White - Sage (Hungary)
-    "PAOK": "8"                      # Black/White - Graphite (Greece)
+    "PAOK": "8",                      # Black/White - Graphite (Greece)
+
+    "UFC": "11",
+    "UFC Fight Night": "11",
 }
