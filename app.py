@@ -214,7 +214,7 @@ def google_sync():
             colorId = TEAM_COLOR_MAPPING[calendar.split(" - ")[0].strip()]
         except KeyError:
             print(f"Unknown team color for calendar: {calendar}")
-            colorId = 8 # graphite
+            colorId = "8" # graphite
         
         calendar_formatted = calendar
         if '-' in calendar:
