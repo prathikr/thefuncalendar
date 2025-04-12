@@ -55,7 +55,7 @@ async function load() {
                         id: event["event_id"], 
                         date: event["date"],
                         title: event["title"],
-                        description: event["location"],
+                        description: event["description"],
                         calendar_id: event["calendar_id"]
                     }
                 );
@@ -209,6 +209,12 @@ async function unsubscribe(user_email, calendar_id) {
 
 async function sync() {
     let sync_button = document.getElementById("sync");
+
+    // Store original width and set fixed width
+    const originalWidth = sync_button.offsetWidth;
+    sync_button.style.width = originalWidth + "px";
+    sync_button.style.textAlign = "center";
+
     sync_button.innerText = "Sync-ing..."
     let url = windowLocationArr[0] + '//' + windowLocationArr[2] + '/google/sync'
     let data = {}
@@ -221,14 +227,32 @@ async function sync() {
         }
     }
         
-    await fetch(url, {
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
+    }).then(response => {
+        if (response.ok) {
+            sync_button.innerText = "Sync w/ GCal"
+            return
+        } else {
+            throw new Error('Error in sync dashboard.js');
+        }
     });
-    sync_button.innerText = "Sync w/ GCal"
+
+    // Animation for sync button
+    let syncDots = 0;
+    let syncInterval = setInterval(() => {
+        if (sync_button.innerText.startsWith("Sync-ing")) {
+            syncDots = (syncDots % 3) + 1;
+            sync_button.innerText = "Sync-ing" + ".".repeat(syncDots);
+        } else {
+            clearInterval(syncInterval);
+        }
+    }, 1000);
+    
 }
 
 // Function to generate a range of 

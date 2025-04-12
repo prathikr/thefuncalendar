@@ -215,9 +215,15 @@ def google_sync():
         except KeyError:
             print(f"Unknown team color for calendar: {calendar}")
             colorId = 8 # graphite
-            
+        
+        calendar_formatted = calendar
+        if '-' in calendar:
+            team = calendar.split(" - ")[0].strip()
+            league = calendar.split(" - ")[1].strip()
+            calendar_formatted = f"{team} ({league})"
+
         calendar_info = {
-            'summary': calendar + ' via thefuncalendar',
+            'summary': calendar_formatted + ' via thefuncalendar',
             'timeZone': 'America/Los_Angeles',
             'colorId': colorId,
         }
@@ -231,6 +237,7 @@ def google_sync():
 
         print("num events:", len(data[calendar]))
         for raw_event in data[calendar]:
+            print("raw_event", raw_event)
             date = raw_event['date']
             time = raw_event['time']
             start_time, end_time = time.split('-')
@@ -252,7 +259,7 @@ def google_sync():
                     'timeZone': 'America/Los_Angeles',
                 },
                 'colorId': colorId,
-                'description': raw_event.get('description', ''),
+                'description': raw_event["description"],
             }
 
             batch.add(

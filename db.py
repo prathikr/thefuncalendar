@@ -214,6 +214,7 @@ def get_calendars():
                 event["date"] = i["date"]
                 event["time"] = i["time"]
                 event["calendar_id"] = i["calendar_id"]
+                event["description"] = i["description"]
                 calendar["events"].append(event)
         calendars.append(calendar)
 
