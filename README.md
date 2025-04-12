@@ -1,6 +1,4 @@
-# thefuncalendar
-
-#### https://www.thefuncalendar.net
+# www.thefuncalendar.net
 
 TODO:
 - compatible with apple calendar 👀 other calendar apps too?
