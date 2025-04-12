@@ -2,9 +2,7 @@
 
 const windowLocation = window.location;
 const windowLocationArr = windowLocation.href.toString().split("/");
-console.log("windowLocationArr:", windowLocationArr);
 const user_email = windowLocationArr[windowLocationArr.length - 1];
-console.log("user_email:", user_email);
 
 // Define an array to store user calendars
 let user_calendars = [];
@@ -19,7 +17,6 @@ async function load() {
     let user = windowLocationArr[0] + '//' + windowLocationArr[2] + '/api/users/' + user_email;
     user = await fetch(user);
     user = await user.json();
-    console.log("user details:", user)
 
     let db_calendars = windowLocationArr[0] + '//' + windowLocationArr[2] + '/api/calendars'
     db_calendars = await fetch(db_calendars);
@@ -65,8 +62,6 @@ async function load() {
             }
         }
     }
-    console.log("user calendars:", user_calendars)
-    console.log("all calendars:", all_calendars)
     showCalendar(currentMonth, currentYear);
     displayCalendars();
 }
