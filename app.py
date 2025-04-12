@@ -237,7 +237,6 @@ def google_sync():
 
         print("num events:", len(data[calendar]))
         for raw_event in data[calendar]:
-            print("raw_event", raw_event)
             date = raw_event['date']
             time = raw_event['time']
             start_time, end_time = time.split('-')
