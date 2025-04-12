@@ -1,7 +1,6 @@
 # thefuncalendar
 
-#### prod: https://thefuncalendar-2adc7ef01a7c.herokuapp.com/
-#### dev: https://mangoml-fd6b764656ee.herokuapp.com/
+#### https://www.thefuncalendar.net/
 
 TODO:
 - compatible with apple calendar 👀 other calendar apps too?
