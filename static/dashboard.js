@@ -94,7 +94,7 @@ function displayCalendars() {
     const calendarsByOrg = {};
     for (let i = 0; i < all_calendars.length; i++) {
         const calendar = all_calendars[i];
-        const org = calendar.organization + " - " + calendar.season;
+        const org = calendar.organization;
         
         if (!calendarsByOrg[org]) {
             calendarsByOrg[org] = [];

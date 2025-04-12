@@ -49,11 +49,11 @@ body {
 }
 
 #left {
-    width: 50%;
+    width: 30%;
 }
 
 #right {
-    width: 45%;
+    width: 65%;
 }
 
 #my-calendar h3 {
@@ -186,6 +186,7 @@ body {
 	border: 1px solid #e2e2e2;
 	text-align: center;
 	vertical-align: top;
+	height: 35px;
 }
 
 /* Date picker */
