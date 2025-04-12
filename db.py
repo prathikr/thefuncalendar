@@ -720,7 +720,7 @@ if __name__ == "__main__":
 
     for league_key, league_name in top_soccer_leagues.items():
         soccer_schedule = get_soccer_league_schedule(league_key)
-        add_schedule_to_db(soccer_schedule, league_name + " (fútbol)", "2025", check_duplicates=True)
+        add_schedule_to_db(soccer_schedule, league_name, "2025", check_duplicates=True)
 
     fight_night_schedule, ufc_schedule = get_ufc_schedule()
     add_ufc_schedule_to_db(fight_night_schedule, ufc_schedule)
