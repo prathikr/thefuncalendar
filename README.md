@@ -1,9 +1,12 @@
 ### www.thefuncalendar.net
 
+In Progress:
+- separate db into external service
+- auto-pull playoff schedule and next season schedule when available
+
 TODO:
 - compatible with apple calendar 👀 other calendar apps too?
-- tmdb potentially add tv show release schedules?)
-
+- tmdb to add tv show release schedules?
 - add live score update feature
 - Hide spoilers feature where the score doesn’t update until 24hrs after the game incase you want to catch the replay (inspired by mlb.tv lol)
 - CFB/CBB (need to select a subset of all colleges to support)

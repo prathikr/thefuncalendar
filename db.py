@@ -704,10 +704,10 @@ if __name__ == "__main__":
         # "EUC": "European Championship", # sportsdataio error...
         "ESP": "La Liga",
         "DEB": "Bundesliga",
-        "ITSA": "Serie A",
+        # "ITSA": "Serie A",
         
         # Tier 2: Major Competitions
-        "FRL1": "Ligue 1",
+        # "FRL1": "Ligue 1",
         # "UEL": "UEFA Europa League",
         # "COPA": "Copa America", # sportsdataio error...
         # "BRSA": "Série A",
