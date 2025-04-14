@@ -66,7 +66,7 @@ def daily_db_reset():
         print(f"Error during daily DB reset: {e}")
 
 scheduler = BackgroundScheduler(daemon=True, timezone=pytz.timezone('America/Los_Angeles'))
-scheduler.add_job(daily_db_reset, 'cron', hour=18, minute=50)
+scheduler.add_job(daily_db_reset, 'cron', hour=19, minute=0)
 # --- End Scheduler Setup ---
 
 # Flask-Login helper to retrieve a user from our db
