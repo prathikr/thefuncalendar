@@ -66,7 +66,8 @@ def daily_db_reset():
         print(f"Error during daily DB reset: {e}")
 
 scheduler = BackgroundScheduler(daemon=True, timezone=pytz.timezone('America/Los_Angeles'))
-scheduler.add_job(daily_db_reset, 'cron', hour=19, minute=0)
+scheduler.add_job(daily_db_reset, 'cron', hour=19, minute=25)
+scheduler.start()
 # --- End Scheduler Setup ---
 
 # Flask-Login helper to retrieve a user from our db
@@ -300,5 +301,4 @@ def google_sync():
     return redirect(f"/dashboard/{user_email}")
 
 if __name__ == "__main__":
-    scheduler.start()
     app.run(ssl_context="adhoc")
