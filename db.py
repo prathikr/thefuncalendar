@@ -541,14 +541,25 @@ def get_mlb_schedule():
     return get_schedule(schedule_url, stadiums_url, team_info_url, MLB_API_KEY)
 
 def get_nba_schedule():
-    schedule_url = f"https://api.sportsdata.io/v3/nba/scores/json/SchedulesBasic/2025"
-    stadiums_url = "https://api.sportsdata.io/v3/nba/scores/json/Stadiums"
-    team_info_url = "https://api.sportsdata.io/v3/nba/scores/json/AllTeams"
-    
-    NBA_API_KEY = os.environ.get("NBA_API_KEY", None)
-    assert NBA_API_KEY is not None, "Missing NBA API key"
+    seasons = ["2025", "2025POST"]
+    schedules = []
+    for season in seasons:
+        schedule_url = f"https://api.sportsdata.io/v3/nba/scores/json/SchedulesBasic/{season}"
+        stadiums_url = "https://api.sportsdata.io/v3/nba/scores/json/Stadiums"
+        team_info_url = "https://api.sportsdata.io/v3/nba/scores/json/AllTeams"
+        
+        NBA_API_KEY = os.environ.get("NBA_API_KEY", None)
+        assert NBA_API_KEY is not None, "Missing NBA API key"
 
-    return get_schedule(schedule_url, stadiums_url, team_info_url, NBA_API_KEY)
+        schedule = get_schedule(schedule_url, stadiums_url, team_info_url, NBA_API_KEY)
+        schedules.append(schedule)
+    combined_schedule = {}
+    for schedule in schedules:
+        for team, events in schedule.items():
+            if team not in combined_schedule:
+                combined_schedule[team] = []
+            combined_schedule[team].extend(events)
+    return combined_schedule
 
 def get_nfl_schedule():
     schedule_url = f"https://api.sportsdata.io/v3/nfl/scores/json/SchedulesBasic/2024REG"
@@ -678,49 +689,52 @@ def add_ufc_schedule_to_db(fight_night_schedule, ufc_schedule):
     }
     _ = insert_calendar(calendar)
 
-if __name__ == "__main__":
+def main():
     create_db_table()
 
-    mlb_schedule = get_mlb_schedule()
-    add_schedule_to_db(mlb_schedule, "MLB", "2025")
+    # mlb_schedule = get_mlb_schedule()
+    # add_schedule_to_db(mlb_schedule, "MLB", "2025")
 
     nba_schedule = get_nba_schedule()
     add_schedule_to_db(nba_schedule, "NBA", "2024/2025")
 
-    nfl_schedule = get_nfl_schedule()
-    add_schedule_to_db(nfl_schedule, "NFL", "2024/2025")
+    # nfl_schedule = get_nfl_schedule()
+    # add_schedule_to_db(nfl_schedule, "NFL", "2024/2025")
 
-    nhl_schedule = get_nhl_schedule()
-    add_schedule_to_db(nhl_schedule, "NHL", "2024/2025")
+    # nhl_schedule = get_nhl_schedule()
+    # add_schedule_to_db(nhl_schedule, "NHL", "2024/2025")
 
-    ipl_schedule = get_ipl_schedule()
-    add_schedule_to_db(ipl_schedule, "IPL", "2025")
+    # ipl_schedule = get_ipl_schedule()
+    # add_schedule_to_db(ipl_schedule, "IPL", "2025")
 
-    top_soccer_leagues = {
-        "MLS": "MLS",
-        # "FIFA": "FIFA World Cup", # sportsdataio error...
-        "UCL": "UEFA Champions League",
-        "EPL": "Premier League",
-        # "EUC": "European Championship", # sportsdataio error...
-        "ESP": "La Liga",
-        "DEB": "Bundesliga",
-        # "ITSA": "Serie A",
+    # top_soccer_leagues = {
+    #     "MLS": "MLS",
+    #     # "FIFA": "FIFA World Cup", # sportsdataio error...
+    #     "UCL": "UEFA Champions League",
+    #     "EPL": "Premier League",
+    #     # "EUC": "European Championship", # sportsdataio error...
+    #     "ESP": "La Liga",
+    #     "DEB": "Bundesliga",
+    #     # "ITSA": "Serie A",
         
-        # Tier 2: Major Competitions
-        # "FRL1": "Ligue 1",
-        # "UEL": "UEFA Europa League",
-        # "COPA": "Copa America", # sportsdataio error...
-        # "BRSA": "Série A",
-        # "ACN": "Africa Cup of Nations",
-        # "RFPL": "RFPL",
-        # "UCOL": "UEFA Europa Conference League",
-        # "UNL": "UEFA Nations League",
-        # "SPL": "Saudi Professional League"
-    }
+    #     # Tier 2: Major Competitions
+    #     # "FRL1": "Ligue 1",
+    #     # "UEL": "UEFA Europa League",
+    #     # "COPA": "Copa America", # sportsdataio error...
+    #     # "BRSA": "Série A",
+    #     # "ACN": "Africa Cup of Nations",
+    #     # "RFPL": "RFPL",
+    #     # "UCOL": "UEFA Europa Conference League",
+    #     # "UNL": "UEFA Nations League",
+    #     # "SPL": "Saudi Professional League"
+    # }
 
-    for league_key, league_name in top_soccer_leagues.items():
-        soccer_schedule = get_soccer_league_schedule(league_key)
-        add_schedule_to_db(soccer_schedule, league_name, "2025", check_duplicates=True)
+    # for league_key, league_name in top_soccer_leagues.items():
+    #     soccer_schedule = get_soccer_league_schedule(league_key)
+    #     add_schedule_to_db(soccer_schedule, league_name, "2025", check_duplicates=True)
 
-    fight_night_schedule, ufc_schedule = get_ufc_schedule()
-    add_ufc_schedule_to_db(fight_night_schedule, ufc_schedule)
+    # fight_night_schedule, ufc_schedule = get_ufc_schedule()
+    # add_ufc_schedule_to_db(fight_night_schedule, ufc_schedule)
+
+if __name__ == "__main__":
+    main()

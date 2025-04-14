@@ -17,9 +17,12 @@ from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 
 import db
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from dotenv import load_dotenv
 load_dotenv()
+
+import pytz
 
 from constants import TEAM_COLOR_MAPPING
 
@@ -44,6 +47,27 @@ login_manager.init_app(app)
 
 # OAuth 2 client setup
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
+
+# --- Scheduler Setup ---
+DB_FILE = "database.db" # Define the database file name
+
+def daily_db_reset():
+    """Deletes the database file and runs the db main function."""
+    print("Running daily DB reset...")
+    try:
+        if os.path.exists(DB_FILE):
+            os.remove(DB_FILE)
+            print(f"Deleted existing database: {DB_FILE}")
+        else:
+            print(f"Database file not found, skipping deletion: {DB_FILE}")
+        db.main() # Assuming db.py has a main() function to initialize/rebuild
+        print("Database reset complete.")
+    except Exception as e:
+        print(f"Error during daily DB reset: {e}")
+
+scheduler = BackgroundScheduler(daemon=True, timezone=pytz.timezone('America/Los_Angeles'))
+scheduler.add_job(daily_db_reset, 'cron', hour=8, minute=0)
+# --- End Scheduler Setup ---
 
 # Flask-Login helper to retrieve a user from our db
 @login_manager.user_loader
@@ -276,4 +300,5 @@ def google_sync():
     return redirect(f"/dashboard/{user_email}")
 
 if __name__ == "__main__":
+    scheduler.start()
     app.run(ssl_context="adhoc")

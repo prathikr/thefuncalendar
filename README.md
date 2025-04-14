@@ -46,3 +46,5 @@ Premium Features
 - Live scores are uploaded to your google calendar
 - Adds game details to description like probable starting pitchers, starting 5, injury report details, broadcast data
 - No ads
+
+export PATH=/Users/prathikr/miniforge3/envs/mangoml/bin:$PATH
