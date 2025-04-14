@@ -66,7 +66,7 @@ def daily_db_reset():
         print(f"Error during daily DB reset: {e}")
 
 scheduler = BackgroundScheduler(daemon=True, timezone=pytz.timezone('America/Los_Angeles'))
-scheduler.add_job(daily_db_reset, 'cron', hour=19, minute=25)
+scheduler.add_job(daily_db_reset, 'cron', hour=8, minute=0)
 scheduler.start()
 # --- End Scheduler Setup ---
 
