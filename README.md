@@ -41,5 +41,5 @@ Premium Features
 - Calendars auto-update after each season
 - Automatically adds playoff schedule
 - Live scores are uploaded to your google calendar
-- Adds game details to description like probable starting pitchers, starting 5, injury report details, broadcast data
+- Adds game details to description like broadcast data, betting lines
 - No ads

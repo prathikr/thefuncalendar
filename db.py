@@ -41,7 +41,7 @@ def create_db_table():
                 name TEXT NOT NULL,
                 events TEXT,
                 organization TEXT NOT NULL,
-                season TEXT NOT NULL
+                season TEXT
             );
             
         ''')
@@ -678,49 +678,124 @@ def add_ufc_schedule_to_db(fight_night_schedule, ufc_schedule):
     }
     _ = insert_calendar(calendar)
 
+def add_tv_show_to_db(tv_show, streaming_services):
+    headers = {
+        "accept": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDJmMWNiOTU0N2U5ODM3ZTc1M2VhYjMxNjE0MDZkMyIsIm5iZiI6MTc0NDQzNDM4MS4zNDMwMDAyLCJzdWIiOiI2N2Y5ZjRjZGVhODBkODUxNzU5OWU0N2IiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.VAglyB1pAimZB3R-ggw58a2Mvkil9rjZGuSOqBDvYTs"
+    }
+
+    query_url = f"https://api.themoviedb.org/3/search/tv?query={tv_show}&include_adult=true&language=en-US&page=1"
+
+    response = requests.get(query_url, headers=headers)
+    if response.status_code == 200:
+        query_data = response.json()
+    else:
+        print(f"Error: Received status code {response.status_code}")
+
+    print("query_data", query_data)
+
+    series_id = query_data["results"][0]["id"]
+    series_url = f"https://api.themoviedb.org/3/tv/{series_id}?language=en-US"
+
+    response = requests.get(series_url, headers=headers)
+    if response.status_code == 200:
+        series_data = response.json()
+    else:
+        print(f"Error: Received status code {response.status_code}")
+
+    # print("number of seasons", series_data["number_of_seasons"])
+    # print("number of episodes", series_data["number_of_episodes"])
+    # print("next episode to air", series_data["next_episode_to_air"])
+    # print("last episode to air", series_data["last_episode_to_air"])
+    # print("first air date", series_data["first_air_date"])
+    print("production companies", series_data["production_companies"])
+
+    streaming_service = None
+    for production_company in series_data["production_companies"]:
+        for ss in streaming_services:
+            if ss in production_company["name"]:
+                streaming_service = ss
+                break
+
+    print("streaming_service", streaming_service)
+    assert streaming_service is not None, f"Unsupported streaming service for {tv_show}"
+    
+    first_air_date = series_data["first_air_date"]
+    # Convert from YYYY-MM-DD to MM/DD/YYYY format
+    date_obj = datetime.datetime.strptime(first_air_date, "%Y-%m-%d")
+    date_formatted = date_obj.strftime("%m/%d/%Y")
+
+    latest_number = series_data["number_of_seasons"]
+
+    schedule = []
+    for episode_idx in range(1, series_data["number_of_episodes"] + 1):
+        event = {
+                "title": f"{tv_show} S{latest_number}E{episode_idx}",
+                "location": streaming_service,
+                "date": date_formatted,
+                "time": "12:00-14:00"
+            }
+        schedule.append(event)
+
+        # Calculate the next episode air date by adding (episode_idx - 1) weeks to the first air date
+        next_episode_date = date_obj + datetime.timedelta(weeks=episode_idx)
+        date_formatted = next_episode_date.strftime("%m/%d/%Y")
+
+    calendar = {
+        "name": tv_show,
+        "events": schedule,
+        "organization": streaming_service,
+        "season": "2025"
+    }
+    _ = insert_calendar(calendar)
+
 if __name__ == "__main__":
     create_db_table()
 
-    mlb_schedule = get_mlb_schedule()
-    add_schedule_to_db(mlb_schedule, "MLB", "2025")
+    # mlb_schedule = get_mlb_schedule()
+    # add_schedule_to_db(mlb_schedule, "MLB", "2025")
 
-    nba_schedule = get_nba_schedule()
-    add_schedule_to_db(nba_schedule, "NBA", "2024/2025")
+    # nba_schedule = get_nba_schedule()
+    # add_schedule_to_db(nba_schedule, "NBA", "2024/2025")
 
-    nfl_schedule = get_nfl_schedule()
-    add_schedule_to_db(nfl_schedule, "NFL", "2024/2025")
+    # nfl_schedule = get_nfl_schedule()
+    # add_schedule_to_db(nfl_schedule, "NFL", "2024/2025")
 
-    nhl_schedule = get_nhl_schedule()
-    add_schedule_to_db(nhl_schedule, "NHL", "2024/2025")
+    # nhl_schedule = get_nhl_schedule()
+    # add_schedule_to_db(nhl_schedule, "NHL", "2024/2025")
 
-    ipl_schedule = get_ipl_schedule()
-    add_schedule_to_db(ipl_schedule, "IPL", "2025")
+    # ipl_schedule = get_ipl_schedule()
+    # add_schedule_to_db(ipl_schedule, "IPL", "2025")
 
-    top_soccer_leagues = {
-        "MLS": "MLS",
-        # "FIFA": "FIFA World Cup", # sportsdataio error...
-        "UCL": "UEFA Champions League",
-        "EPL": "Premier League",
-        # "EUC": "European Championship", # sportsdataio error...
-        "ESP": "La Liga",
-        "DEB": "Bundesliga",
-        "ITSA": "Serie A",
+    # top_soccer_leagues = {
+    #     "MLS": "MLS",
+    #     # "FIFA": "FIFA World Cup", # sportsdataio error...
+    #     "UCL": "UEFA Champions League",
+    #     "EPL": "Premier League",
+    #     # "EUC": "European Championship", # sportsdataio error...
+    #     "ESP": "La Liga",
+    #     "DEB": "Bundesliga",
+    #     "ITSA": "Serie A",
         
-        # Tier 2: Major Competitions
-        "FRL1": "Ligue 1",
-        # "UEL": "UEFA Europa League",
-        # "COPA": "Copa America", # sportsdataio error...
-        # "BRSA": "Série A",
-        # "ACN": "Africa Cup of Nations",
-        # "RFPL": "RFPL",
-        # "UCOL": "UEFA Europa Conference League",
-        # "UNL": "UEFA Nations League",
-        # "SPL": "Saudi Professional League"
-    }
+    #     # Tier 2: Major Competitions
+    #     "FRL1": "Ligue 1",
+    #     # "UEL": "UEFA Europa League",
+    #     # "COPA": "Copa America", # sportsdataio error...
+    #     # "BRSA": "Série A",
+    #     # "ACN": "Africa Cup of Nations",
+    #     # "RFPL": "RFPL",
+    #     # "UCOL": "UEFA Europa Conference League",
+    #     # "UNL": "UEFA Nations League",
+    #     # "SPL": "Saudi Professional League"
+    # }
 
-    for league_key, league_name in top_soccer_leagues.items():
-        soccer_schedule = get_soccer_league_schedule(league_key)
-        add_schedule_to_db(soccer_schedule, league_name, "2025", check_duplicates=True)
+    # for league_key, league_name in top_soccer_leagues.items():
+    #     soccer_schedule = get_soccer_league_schedule(league_key)
+    #     add_schedule_to_db(soccer_schedule, league_name, "2025", check_duplicates=True)
 
-    fight_night_schedule, ufc_schedule = get_ufc_schedule()
-    add_ufc_schedule_to_db(fight_night_schedule, ufc_schedule)
+    # fight_night_schedule, ufc_schedule = get_ufc_schedule()
+    # add_ufc_schedule_to_db(fight_night_schedule, ufc_schedule)
+
+    tv_data = {"Apple Studios": ["Your Friends and Neighbors", "Government Cheese"],
+               "NBC": ["Saturday Night Live"]}
+    add_tv_shows_to_db(tv_data)

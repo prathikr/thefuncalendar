@@ -1,4 +1,4 @@
-TEAM_COLOR_MAPPING = {
+TEAM_COLOR_MAP = {
     # MLB Teams
     "Cubs": "7",          # Blue - Peacock
     "Dodgers": "7",       # Blue - Peacock
@@ -309,4 +309,12 @@ TEAM_COLOR_MAPPING = {
 
     "UFC": "11",
     "UFC Fight Nights": "11",
+
+    
 }
+
+STREAMING_SERVICES_COLOR_MAP = {
+    "Apple Studios": "8"
+}
+
+COLOR_MAP = {**TEAM_COLOR_MAP, **STREAMING_SERVICES_COLOR_MAP}

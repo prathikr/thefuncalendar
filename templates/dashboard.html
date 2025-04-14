@@ -69,6 +69,15 @@
 					<!-- Dropdown to select a specific year -->
 					<select id="year" onchange="jump()"></select>
                     <button id="sync" onclick="sync()">Sync w/ GCal</button>
+					<!-- Display flashed messages here -->
+                    {% with messages = get_flashed_messages() %}
+						<p style="color: red;">{{ messages }}</p>
+                      {% if messages %}
+                        {% for category, message in messages %}
+                          <p style="color: red;">{{ message }}</p>
+                        {% endfor %}
+                      {% endif %}
+                    {% endwith %}
 				</div>
 			</div>
 		</div>

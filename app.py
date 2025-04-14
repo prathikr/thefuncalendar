@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime
 
-from flask import Flask, redirect, request, url_for, render_template, jsonify
+from flask import Flask, redirect, request, url_for, render_template, jsonify, session, flash
 from flask_login import (
     LoginManager,
     current_user,
@@ -21,7 +21,7 @@ import db
 from dotenv import load_dotenv
 load_dotenv()
 
-from constants import TEAM_COLOR_MAPPING
+from constants import COLOR_MAP
 
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
@@ -211,8 +211,13 @@ def google_sync():
         # create thefuncalendar with currently selected events
         colorId = None
         try:
-            colorId = TEAM_COLOR_MAPPING[calendar.split(" - ")[0].strip()]
+            # team colors
+            colorId = COLOR_MAP[calendar.split(" - ")[0].strip()]
         except KeyError:
+            # Add tv show colors
+            colorId = COLOR_MAP[calendar.split(" - ")[1].strip()]
+        except KeyError:
+            # if we can't find the colorId, set it to a default value
             print(f"Unknown team color for calendar: {calendar}")
             colorId = "8" # graphite
         
@@ -228,7 +233,16 @@ def google_sync():
             'colorId': colorId,
         }
 
-        created_calendar = service.calendars().insert(body=calendar_info).execute()
+        try:
+            raise SystemExit
+            created_calendar = service.calendars().insert(body=calendar_info).execute()
+        except SystemExit as e:
+            print(f"THROTTLING ERROR")
+            print("TODO: handle throttling with exponential backoff")
+            print("FOR NOW: wait and retry in about 1 minute")
+
+            flash("Throttling error, too large of a request.", "error")
+            return redirect(f"/dashboard/{user_email}")
 
         print("created calendar id:", created_calendar['id'])
 

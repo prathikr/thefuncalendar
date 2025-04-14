@@ -235,6 +235,7 @@ async function sync() {
         body: JSON.stringify(data),
     }).then(response => {
         if (response.ok) {
+            console.log("response", response)
             sync_button.innerText = "Sync w/ GCal"
             return
         } else {
